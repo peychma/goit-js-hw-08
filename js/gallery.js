@@ -1,3 +1,4 @@
+console.log("===");
 const images = [
   {
     preview:
@@ -77,14 +78,17 @@ const galleryHTML = images.map(image => `<li class="gallery-item">
   </a>
 </li>`
 ).join("");
+gallery.innerHTML = galleryHTML;
+
 let instance;
 gallery.addEventListener("click", function (event) {
   event.preventDefault();
   const target = event.target;
-  const galleryLink = target.closest(".gallery-link");
+  console.log(target);
+  const galleryLink = target.getAttribute('data-source');
+  console.log(galleryLink);
   if (galleryLink) {
-    const largeImageUrl = galleryLink.dataset.source;
-    instance = basicLightbox.create(`<img src="${largeImageUrl}" alt="${target.alt}">`);
+    instance = basicLightbox.create(`<img src="${galleryLink}" alt="${target.alt}">`);
     instance.show();
     window.addEventListener("keydown", handleKeyPress);
   }
